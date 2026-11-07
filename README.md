@@ -7,15 +7,17 @@ This repository accompanies the bachelor thesis *Simulation-Based Testing Framew
 ## How it works
 
 ```mermaid
-flowchart LR
-    Client["Client (C++)<br/>sends setpoints"]
-    Broker["MQTT broker<br/>localhost:1883"]
-    Sim["Simulator (Python)<br/>RLC circuit"]
+sequenceDiagram
+    participant Client as Client (C++)
+    participant Broker as MQTT broker
+    participant Sim as Simulator (Python)
 
-    Client -- "circuit/setpoint/cmd" --> Broker
-    Broker -- "circuit/setpoint/cmd" --> Sim
-    Sim -- "circuit/state/value" --> Broker
-    Broker -- "circuit/state/value" --> Client
+    Client->>Broker: circuit/setpoint/cmd
+    Broker->>Sim: circuit/setpoint/cmd
+    loop every 25 ms
+        Sim->>Broker: circuit/state/value
+        Broker->>Client: circuit/state/value
+    end
 ```
 
 1. The **client** publishes an input voltage `Vin` (the setpoint).
