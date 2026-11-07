@@ -1,0 +1,5 @@
+{
+  "name": "mqttmotorcontroller",
+  "version": "1.0.0",
+  "dependencies": ["paho-mqtt", "paho-mqttpp3", "nlohmann-json"]
+}
