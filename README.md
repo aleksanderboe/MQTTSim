@@ -6,24 +6,9 @@ This repository accompanies the bachelor thesis *Simulation-Based Testing Framew
 
 ## How it works
 
-```mermaid
-%%{init: {"sequence": {"mirrorActors": false}}}%%
-sequenceDiagram
-    participant Client as Client (C++)
-    participant Broker as MQTT broker
-    participant Sim as Simulator (Python)
-
-    Client->>Broker: circuit/setpoint/cmd
-    Broker->>Sim: circuit/setpoint/cmd
-    loop every 25 ms
-        Sim->>Broker: circuit/state/value
-        Broker->>Client: circuit/state/value
-    end
-```
-
-1. The **client** publishes an input voltage `Vin` (the setpoint).
+1. The **client** publishes an input voltage `Vin` (the setpoint) on `circuit/setpoint/cmd`.
 2. The **broker** routes the message to the simulator.
-3. The **simulator** integrates the circuit equations every 1 ms and publishes the capacitor voltage `Vout` every 25 ms.
+3. The **simulator** integrates the circuit equations every 1 ms and publishes the capacitor voltage `Vout` on `circuit/state/value` every 25 ms.
 4. The client receives `Vout` as feedback, the same signal the controller would read from its analog input on real hardware.
 
 ### The simulated plant
