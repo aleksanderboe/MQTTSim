@@ -7,6 +7,7 @@ This repository accompanies the bachelor thesis *Simulation-Based Testing Framew
 ## How it works
 
 ```mermaid
+%%{init: {"sequence": {"mirrorActors": false}}}%%
 sequenceDiagram
     participant Client as Client (C++)
     participant Broker as MQTT broker
